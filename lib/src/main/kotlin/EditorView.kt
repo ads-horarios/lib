@@ -5,9 +5,9 @@ import java.awt.event.FocusAdapter
 import java.awt.event.FocusEvent
 import javax.swing.*
 
-fun main() {
+/*fun main() {
     EditorView().open()
-}
+}*/
 
 class EditorView {
     private val controller = EditorController()
@@ -27,11 +27,11 @@ class EditorView {
         middle.preferredSize = Dimension(300, 900) // Set panel size
         middle.background = Color.WHITE // Set background color for middle panel
 
-        val newKeyButton = JButton("New key")
+        val newKeyButton = JButton("Novo nó")
         newKeyButton.preferredSize = Dimension(260, 40)
         left.add(newKeyButton)
 
-        val deleteKeyButton = JButton("Delete JSON Key")
+        val deleteKeyButton = JButton("Remover nó (pela key)")
         deleteKeyButton.preferredSize = Dimension(260, 40)
         left.add(deleteKeyButton)
 
@@ -53,15 +53,15 @@ class EditorView {
         })
 
         newKeyButton.addActionListener {
-            val keyName = JOptionPane.showInputDialog("Enter key name")
+            val keyName = JOptionPane.showInputDialog("Informe o nome para a chave")
             var teste = ' '
 
             val dataTypeSelectionDialog = JOptionPane()
             val dataTypes = arrayOf("Array", "Object", "String", "Boolean", "Number", "Null")
             val selectedDataType = JOptionPane.showInputDialog(
                 dataTypeSelectionDialog,
-                "Select data type for the key",
-                "Data Type",
+                "Selecione o tipo de dados desejado para esta chave",
+                "Tipo de Dados",
                 JOptionPane.QUESTION_MESSAGE,
                 null,
                 dataTypes,
@@ -74,7 +74,10 @@ class EditorView {
             when (selectedDataType) {
                 "Null" -> jsonValue = JSONNull()
                 else -> {
-                    inputValue = JOptionPane.showInputDialog("Enter value")
+                    inputValue = JOptionPane.showInputDialog(null,
+                        "Informe o valor desejado\nExemplos:\n  >123 (Number)\n  >abc(String)\n  >[123,'fulano',true] (Array)\n  >false (Bollean)",
+                        "Valor",
+                        JOptionPane.PLAIN_MESSAGE)
                     jsonValue = controller.parseInput(inputValue, selectedDataType)
                 }
             }
@@ -102,12 +105,12 @@ class EditorView {
         }
 
         deleteKeyButton.addActionListener {
-            val keyName = JOptionPane.showInputDialog("Enter key name to delete")
+            val keyName = JOptionPane.showInputDialog("Informe o nome da chave a ser deletada (case-sensitive)")
             if(controller.jsonObject.containsKey(keyName)) {
                 controller.jsonObject.remove(keyName)
                 controller.observer.modifyObject()
             } else {
-                JOptionPane.showMessageDialog(null, "Invalid key, deletion not performed.", "Error", JOptionPane.ERROR_MESSAGE)
+                JOptionPane.showMessageDialog(null, "Chave inválida, remoção não realizada.", "Error", JOptionPane.ERROR_MESSAGE)
             }
         }
     }

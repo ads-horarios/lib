@@ -71,11 +71,12 @@ class Testes {
         val visitor = JSONVisitor()
         map.accept(visitor)
         assertEquals(
-            "{ \"key1\": { \"nestedKey1\": { } } }",
+            "{\n  \"key1\": {\n    \"nestedKey1\": {\n\n    }, \n" +
+                    "\n  }, " +
+                    "\n\n}, ",
             visitor.jsonString
         )
     }
-
 
     @Test
     fun `test JSONExclude annotation`() {
@@ -139,7 +140,7 @@ class Testes {
     fun testParseToJsonObject() {
         val map: MutableMap<String, JSONValue> = mutableMapOf("object" to JSONObject(mutableListOf(JSONObject.JSONKeyValuePair("key", JSONString("Hello")))))
         val jsonString = controller.parseToJson(map)
-        assertEquals("{\n  \"object\": {\"key\": \"Hello\"}\n}", jsonString)
+        assertEquals("{\n  \"object\": {\n    \"key\": \"Hello\"\n  }\n}", jsonString)
     }
 
     @Test

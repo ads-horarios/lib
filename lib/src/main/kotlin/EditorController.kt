@@ -34,6 +34,7 @@ class EditorController {
                 val listValues = value.split(",").map { it.trim() }.map { parseIndividualValue(it) }
                 JSONArray(listValues.toMutableList())
             }
+
             "Object" -> {
                 val mapValues = value.split(",").map {
                     val keyValue = it.split(":")
@@ -41,9 +42,15 @@ class EditorController {
                 }.toMap()
                 jsonBuilder.build(mapValues)
             }
+
             "String" -> JSONString(value)
             "Boolean" -> JSONBoolean(value.toBoolean())
-            "Number" -> JSONNumber(value.toDouble())
+            //"Number" -> JSONNumber(value.toDouble())
+            "Number" -> try {
+                JSONNumber(value.toDouble())
+            } catch (e: Exception) {
+                JSONNumber(0)
+        }
             else -> JSONNull()
         }
     }

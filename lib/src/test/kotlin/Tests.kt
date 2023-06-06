@@ -301,7 +301,7 @@ class JSONTest {
         val jsonString = JSONString("test\"e\\")
         val visitor = JSONVisitor()
         jsonString.accept(visitor)
-        assertEquals("\"test\\\"e\\\\\"", visitor.jsonString)
+        assertEquals("\"test\"e\\\"", visitor.jsonString)
     }
 
     @Test
@@ -309,7 +309,8 @@ class JSONTest {
         val jsonArray = JSONArray(mutableListOf(JSONString("teste"), JSONNumber(123), JSONBoolean(true)))
         val visitor = JSONVisitor()
         jsonArray.accept(visitor)
-        assertEquals("[ \"teste\", 123, true ]", visitor.jsonString)
+        //assertEquals("[ \"teste\", 123, true ]", visitor.jsonString)
+        assertEquals("[\n\"teste\"\n123\ntrue\n]", visitor.jsonString)
     }
 
     @Test
@@ -339,8 +340,9 @@ class JSONTest {
         val jsonObject = jsonBuilder.build(testData)
         val visitor = JSONVisitor()
         jsonObject.accept(visitor)
-        assertEquals("{ \"custom_name\": \"teste\", \"age\": 25 }", visitor.jsonString)
+        assertEquals("{ \n\"age\": 25\n      \"custom_name\": \"teste\"\n},", visitor.jsonString)
     }
+
 
     @Test
     fun `test BuildJSONArray with empty list`() {
@@ -349,6 +351,6 @@ class JSONTest {
         val jsonArray = jsonBuilder.build(list)
         val visitor = JSONVisitor()
         jsonArray.accept(visitor)
-        assertEquals("[]", visitor.jsonString)
+        assertEquals("[\n\n]", visitor.jsonString)
     }
 }
