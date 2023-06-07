@@ -1,4 +1,3 @@
-// Visitor interface defining the expected methods
 interface Visitor {
     fun visit(l: JSONLeaf)
     fun visit(c: JSONComposite): Boolean
@@ -7,23 +6,18 @@ interface Visitor {
     fun endVisit(l: JSONComposite) { }
 }
 
-// Abstract class representing a JSONValue, which requires implementing the accept() method
 abstract class JSONValue {
     abstract fun accept(v: Visitor)
 }
 
-// Abstract class representing a JSONComposite, which extends JSONValue
 abstract class JSONComposite : JSONValue()
 
-// Abstract class representing a JSONLeaf, which extends JSONValue
-// and implements the accept() method by default
 abstract class JSONLeaf : JSONValue() {
     override fun accept(v: Visitor) {
         v.visit(this)
     }
 }
 
-// Class representing a Visitor implementation that filters JSONValues based on a provided condition
 class JSONConditionedVisitor(val filter: (JSONValue) -> Boolean): Visitor {
     var values: MutableList<JSONValue> = mutableListOf()
 
@@ -41,7 +35,6 @@ class JSONConditionedVisitor(val filter: (JSONValue) -> Boolean): Visitor {
     }
 }
 
-// Class representing a Visitor implementation that builds a JSON string
 class JSONVisitor: Visitor {
     val SEPARATOR: String = ", "
     private var indentLevel: Int = 0
