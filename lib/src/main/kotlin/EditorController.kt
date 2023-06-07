@@ -3,7 +3,6 @@ interface Observer {
 }
 
 class ObjectObserver {
-    //private val observers = mutableListOf<Observer>()
     public val observers = mutableListOf<Observer>()
 
     fun addObserver(observer: Observer) {
@@ -45,7 +44,6 @@ class EditorController {
 
             "String" -> JSONString(value)
             "Boolean" -> JSONBoolean(value.toBoolean())
-            //"Number" -> JSONNumber(value.toDouble())
             "Number" -> try {
                 JSONNumber(value.toDouble())
             } catch (e: Exception) {
@@ -95,7 +93,7 @@ class EditorController {
             }
         }
         if (jsonBuilder.length > 2) {
-            jsonBuilder.delete(jsonBuilder.length - 2, jsonBuilder.length)  // Remove the last comma and newline
+            jsonBuilder.delete(jsonBuilder.length - 2, jsonBuilder.length)
         }
         jsonBuilder.append("\n$indent}")
         return jsonBuilder.toString()
