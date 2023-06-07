@@ -15,17 +15,17 @@ class EditorView {
     val frame = JFrame("JMJSON - JSON Object Editor").apply {
         defaultCloseOperation = JFrame.EXIT_ON_CLOSE
         layout = BorderLayout()
-        size = Dimension(900, 900) // Increase window size
+        size = Dimension(900, 900)
 
         val left = JPanel()
         left.layout = BoxLayout(left, BoxLayout.Y_AXIS)
-        left.preferredSize = Dimension(200, 900) // Increase panel size
-        left.background = Color.LIGHT_GRAY // Set background color for left panel
+        left.preferredSize = Dimension(200, 900)
+        left.background = Color.LIGHT_GRAY
 
-        val middle = JPanel() // New section
+        val middle = JPanel()
         middle.layout = BoxLayout(middle, BoxLayout.Y_AXIS)
-        middle.preferredSize = Dimension(300, 900) // Set panel size
-        middle.background = Color.WHITE // Set background color for middle panel
+        middle.preferredSize = Dimension(300, 900)
+        middle.background = Color.WHITE
 
         val newKeyButton = JButton("Novo nó")
         newKeyButton.preferredSize = Dimension(260, 40)
@@ -36,12 +36,12 @@ class EditorView {
         left.add(deleteKeyButton)
 
         add(left, BorderLayout.WEST)
-        add(middle, BorderLayout.CENTER) // Add new section
+        add(middle, BorderLayout.CENTER)
 
         val right = JPanel(BorderLayout())
         val srcArea = JTextArea()
         srcArea.tabSize = 2
-        srcArea.preferredSize = Dimension(300, 900) // Set preferred size for srcArea
+        srcArea.preferredSize = Dimension(300, 900)
         val scrollPane = JScrollPane(srcArea)
         right.add(scrollPane, BorderLayout.CENTER)
         add(right, BorderLayout.EAST)
@@ -86,7 +86,7 @@ class EditorView {
                 controller.jsonObject[keyName] = jsonValue
                 controller.observer.modifyObject()
 
-                // Create a corresponding text input for the key
+               
                 val textInput = JTextField(inputValue, 20).apply {
                     addActionListener {
                         controller.jsonObject[keyName] = controller.parseInput(text, selectedDataType)
